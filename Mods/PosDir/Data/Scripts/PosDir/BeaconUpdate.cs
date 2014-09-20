@@ -50,12 +50,12 @@
 				if (beacon.CustomName != null && beacon.CustomName.StartsWith(CustomNameKeyPos, StringComparison.InvariantCultureIgnoreCase))
 				{
 					var pos = beacon.CubeGrid.GridIntegerToWorld(beacon.Position);
-					beacon.SetCustomName(string.Format("{0} [X:{1:N}  Y:{2:N}  Z:{3:N}]", CustomNameKeyPos, (int)pos.X, (int)pos.Y, (int)pos.Z));
+					beacon.SetCustomName(string.Format("{0} [X:{1:N0}  Y:{2:N0}  Z:{3:N0}]", CustomNameKeyPos, (int)pos.X, (int)pos.Y, (int)pos.Z));
 				}
 				else if (beacon.CustomName != null && beacon.CustomName.StartsWith(CustomNameKeyDir, StringComparison.InvariantCultureIgnoreCase))
 				{
-					var orientation = beacon.GetTopMostParent().WorldMatrix.Forward;
-					beacon.SetCustomName(string.Format("{0} {1}", CustomNameKeyDir, orientation.ToString()));
+					var orientation = beacon.WorldMatrix.Up;
+					beacon.SetCustomName(string.Format("{0} [X:{1:N5}  Y:{2:N5} Z:{3:N5}]", CustomNameKeyDir, orientation.X, orientation.Y, orientation.Z));
 				}
 			}
 			catch (Exception)

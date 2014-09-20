@@ -58,13 +58,13 @@ namespace PosDirBeaconsSource
 				{
 					var pos = antenna.CubeGrid.GridIntegerToWorld(antenna.Position);
 					//dont really care about the decimal places so cast as int. 
-					antenna.SetCustomName(string.Format("{0} [X:{1:N}  Y:{2:N}  Z:{3:N}]", CustomNameKeyPos, (int)(pos.X), (int)(pos.Y), (int)(pos.Z)));
+					antenna.SetCustomName(string.Format("{0} [X:{1:N0}  Y:{2:N0}  Z:{3:N0}]", CustomNameKeyPos, (int)(pos.X), (int)(pos.Y), (int)(pos.Z)));
 				}
 				else if (antenna.CustomName != null && antenna.CustomName.StartsWith(CustomNameKeyDir, StringComparison.InvariantCultureIgnoreCase))
 				{
-					var orientation = antenna.GetTopMostParent().WorldMatrix.Forward;
+					var orientation = antenna.WorldMatrix.Up;
 					//care about the decimal places as being off a few degrees can be very significant. vector3.tostring is already localized. 
-					antenna.SetCustomName(string.Format("{0} {1}", CustomNameKeyDir, orientation.ToString()));
+					antenna.SetCustomName(string.Format("{0} [X:{1:N5}  Y:{2:N5} Z:{3:N5}]", CustomNameKeyDir, orientation.X, orientation.Y, orientation.Z));
 				}
 				else if (antenna.CustomName != null && antenna.CustomName.StartsWith(CustomNameKeyProbe, StringComparison.InvariantCultureIgnoreCase))
 				{
@@ -93,7 +93,7 @@ namespace PosDirBeaconsSource
 						if (closestdist < 1000 && obj.BroadcastRadius > closestdist)
 							antenna.SetCustomName(string.Format("{0} Asteroid too close. Distance: {1:N}", CustomNameKeyProbe, closestdist));
 						else if (obj.BroadcastRadius > closestdist)
-							antenna.SetCustomName(string.Format("{0} {1}", CustomNameKeyProbe, direction.ToString()));
+							antenna.SetCustomName(string.Format("{0} [X:{1:N5}  Y:{2:N5} Z:{3:N5}]", CustomNameKeyProbe, direction.X, direction.Y, direction.Z));
 						else
 							antenna.SetCustomName(string.Format("{0} {1} Broadcast Range: {2:N}", CustomNameKeyProbe, "No asteroids in range. ", obj.BroadcastRadius));
 					}
